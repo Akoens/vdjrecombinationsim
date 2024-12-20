@@ -6,14 +6,12 @@ Create on 2024-12-16 11:23
 A F Koens
 """
 
-# Define & Create Germline DNA
-# Definition of Heptamer and Nonamer
-# Define Recombination Signal Sequences(RSSs)
-# light and Heavy chains alternatives (VJ & VDJ)
-# RAG "identifying RSS"
-# Cleaving of sequence
-
-from Bio.Seq import Seq
+# - [x] Define & Create Germline DNA
+# - [ ] Definition of Heptamer and Nonamer
+# - [ ] Define Recombination Signal Sequences(RSSs)
+# - [ ] light and Heavy chains alternatives (VJ & VDJ)
+# - [ ] RAG "identifying RSS"
+# - [ ] Cleaving of sequence
 
 
 
