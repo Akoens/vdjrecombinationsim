@@ -1,5 +1,7 @@
 import pytest
-from vdjrecombinationsim.genetics.dna import DNA
+
+from genetics.sequence import Sequence
+from genetics.dna import DNA
 
 
 @pytest.mark.parametrize('sequence', [None, int(), float(), tuple(), list(), set(), dict()])
@@ -39,3 +41,8 @@ def test_complement_sequence(sequence, expected):
 ])
 def test_reverse_complement(sequence, expected):
     assert DNA(sequence).reverse_complement() == DNA(expected)
+
+def test_translate(sequence, expected):
+    # TODO add parameterized tot translate test case.
+    pass
+    assert DNA(sequence).translate() == Sequence(expected)

@@ -1,12 +1,15 @@
 from __future__ import annotations
-
 from .sequence import Sequence
 
 
 class DNA(Sequence):
-    _nucleotides = {'A', 'T', 'C', 'G'}
-    _compliment_nucleotides = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
-    _codon_to_amino_acid = {
+    """
+    The DNA class is a subclass of the Sequence class that implements methods that help in handling and altering of DNA
+    sequences.
+    """
+    NUCLEOTIDES = {'A', 'T', 'C', 'G'}
+    COMPLEMENT_NUCLEOTIDES = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
+    CODON_TO_AMINO_ACIDS = {
         'TTT': 'F', 'TTC': 'F',  # Phenylalanine
         'TTA': 'L', 'TTG': 'L',  # Leucine
         'CTT': 'L', 'CTC': 'L', 'CTA': 'L', 'CTG': 'L',  # Leucine
@@ -34,28 +37,52 @@ class DNA(Sequence):
     }
 
     def __init__(self, sequence: str) -> None:
+        """
+        This class is initialized with a sequence of valid DNA nucleotides in the form of capital ATCG characters.
+        :param sequence: a string containing DNA nucleotides.
+        """
 
-        if not set(sequence) <= set(self._nucleotides):
+        # Check if nucleotides in sequence are valid.
+        if not set(sequence) <= set(self.NUCLEOTIDES):
             raise ValueError('Sequence must contain valid nucleotides')
 
+        # Instantiate super with sequence.
         super().__init__(sequence)
 
     def _complement(self) -> str:
-        complement_sequence = ''.join(self._compliment_nucleotides[nucleotide] for nucleotide in self.sequence)
+        """
+        This functions generates a complement string to the DNA sequence str.
+        :return: a complement DNA sequence as a string.
+        """
+        complement_sequence = ''.join(self.COMPLEMENT_NUCLEOTIDES[nucleotide] for nucleotide in self.sequence)
         return complement_sequence
 
     def compliment(self) -> DNA:
+        """
+        Creates a complemented DNA sequence.
+        :return: DNA instance containing a complemented DNA sequence.
+        """
         complement = self._complement()
         return DNA(complement)
 
     def reverse_complement(self) -> DNA:
+        """
+        Creates a reverse complemented DNA sequence.
+        :return: DNA instance containing a reverse complemented DNA sequence.
+        """
         reverse_complement_sequence = self._complement()[::-1]
         return DNA(reverse_complement_sequence)
 
-    def translate(self):
-        codons = [self.sequence[i:i + 3] for i in range(0, len(self.sequence), 3)]
-        acids = ''.join([self._codon_to_amino_acid[codon] for codon in codons])
-        return Sequence(acids)
+    def translate(self, sliding_window = 0):
+        """
+        Translates the DNA sequence to a protein sequence.
+        :return: A protein sequence as an instance of Sequence.
+        """
+        # Split sequence into codons.
+        codons = [self.sequence[i:i + 3] for i in range(sliding_window, len(self.sequence), 3)]
 
-    def __eq__(self, other):
-        return self.sequence == other.sequence
+        # Translate the codons to acids and join them on a string.
+        acids = ''.join([self.CODON_TO_AMINO_ACIDS[codon] for codon in codons])
+
+        # Return an instance of Sequence containing the protein sequence.
+        return Sequence(acids)

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 class Sequence(object):
     def __init__(self, sequence: str):
         if type(sequence) is not str:
@@ -22,3 +24,15 @@ class Sequence(object):
         :return: length of sequence as int
         """
         return len(self.sequence)
+
+    def __eq__(self, other: Sequence) -> bool:
+        """
+        Compares the _sequence of this instance against the other.
+        :param other: Another instance of DNA sequence.
+        :return: boolean of equality between the two instances.
+        """
+        # Check if other is instance of DNA
+        if not isinstance(other, Sequence):
+            return False
+        # Return equality of sequences
+        return self.sequence == other.sequence

@@ -1,2 +1,5 @@
+# Core
 docopt==0.6.2
 
+# develop
+pytest==8.3.4
